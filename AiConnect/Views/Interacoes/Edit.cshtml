@@ -1,0 +1,76 @@
+﻿@model AiConnect.Models.Interacoes
+
+@{
+    ViewData["Title"] = "Editar Interação";
+}
+
+<h1 style="color:#882414">Editar Interação</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="DataInteracao" class="control-label"></label>
+                <input asp-for="DataInteracao" class="form-control" type="date" />
+                <span asp-validation-for="DataInteracao" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Tipo" class="control-label"></label>
+                <select asp-for="Tipo" class="form-control">
+                    <option value="">Selecione o tipo de interação</option>
+                    <option value="Ligacao">Ligação</option>
+                    <option value="Reuniao">Reunião</option>
+                    <option value="Email">E-mail</option>
+                    <option value="Visita">Visita</option>
+                </select>
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ClienteId" class="control-label"></label>
+                <select asp-for="ClienteId" class="form-control" asp-items="@(new SelectList(ViewBag.Clientes, "Value", "Text"))"></select>
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LeadId" class="control-label"></label>
+                <select asp-for="LeadId" class="form-control" asp-items="@(new SelectList(ViewBag.Leads, "Value", "Text"))"></select>
+                <span asp-validation-for="LeadId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('#ClienteId').change(function () {
+                var clientId = $(this).val();
+                $('#LeadId').empty();
+                $.ajax({
+                    url: '/Interacoes/GetLeadsByClientId/' + clientId,
+                    type: 'GET',
+                    success: function (data) {
+                        $.each(data, function (i, item) {
+                            $('#LeadId').append($('<option>').text(item.text).attr('value', item.value));
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+

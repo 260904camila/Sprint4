@@ -1,0 +1,52 @@
+﻿@model AiConnect.Models.Interacoes
+
+@{
+    ViewData["Title"] = "Detalhes da Interacao";
+}
+
+<h1 style="color:#882414">Detalhes da Interação</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Data de Interacao:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataInteracao)
+        </dd>
+
+        <dt class="col-sm-2">
+            Tipo de Interacao:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+
+        <dt class="col-sm-2">
+            Descrição:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt class="col-sm-2">
+            Cliente:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cliente.Nome)
+        </dd>
+
+        <dt class="col-sm-2">
+            Lead:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Lead.Nome)
+        </dd>
+    </dl>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+        <a asp-action="Index">Voltar</a>
+    </div>
+</div>
+
